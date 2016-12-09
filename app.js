@@ -12,17 +12,56 @@ var express = require('express');
 // for more info, see: https://www.npmjs.com/package/cfenv
 var cfenv = require('cfenv');
 
+var bodyParser = require('body-parser');
 // create a new express server
 var app = express();
 
 // serve the files out of ./public as our main files
 app.use(express.static(__dirname + '/public'));
 
+app.use(bodyParser.json());
+
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
+
+
+app.post('/testPost/', function(req, res){
+  console.log(req.body);
+  res.json({
+  	'estado':'Solicitud Exitosa, bien hecho PAPÁ'
+  });
+  
+});
+
+app.put('/testPut/:id', function(req, res){
+  console.log(req.body);
+  res.json({
+  	'estado':'Solicitud Exitosa, bien hecho PAPÁ'
+  });
+  
+});
+
+app.delete('/testDelete/:id', function(req, res){
+  console.log(req.body);
+  res.json({
+  	'estado':'Solicitud Exitosa, bien hecho PAPÁ'
+  });
+  
+});
+
+app.get('/testGet', function(req, res){
+  console.log(req);
+  res.json({
+  	'estado':'Solicitud Exitosa, bien hecho PAPÁ'
+  });
+  
+});
+
+
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
   // print a message when the server starts listening
   console.log("server starting on " + appEnv.url);
 });
+
